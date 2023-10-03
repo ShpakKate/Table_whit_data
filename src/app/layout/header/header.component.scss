@@ -1,0 +1,46 @@
+.header {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  background: #DA2032
+}
+
+.login-wrapper {
+  width: 170px;
+  height: 38px;
+  margin: 16px 40px auto auto;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: row;
+}
+
+.icon-wrapper {
+  background-color: #C4C4C4;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  margin: auto;
+}
+
+.icon {
+}
+
+.user {
+  color: white;
+  font-size: 14px;
+  font-family: Moscow Sans;
+  font-weight: 700;
+  line-height: 18px;
+  word-wrap: break-word
+}
+
+.role {
+  color: #E5E5E5;
+  font-size: 14px;
+  font-family: Moscow Sans;
+  font-weight: 700;
+  line-height: 18px;
+  word-wrap: break-word
+}
