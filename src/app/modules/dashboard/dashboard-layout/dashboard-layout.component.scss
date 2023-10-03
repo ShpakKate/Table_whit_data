@@ -1,0 +1,17 @@
+.content-wrapper {
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+}
+
+.panel-wrapper {
+  flex: 3;
+  min-width: 260px;
+  height: 100%;
+  background-color: #666F78;
+}
+
+.main-wrapper {
+  flex: 9;
+  background-color: #F5F6F7;
+}

@@ -1,1 +1,31 @@
-<p>dashboard-table works!</p>
+<div class="wrapper">
+  <div>
+    <a>Назад</a>
+  </div>
+
+  <div class="title-wrapper">
+    <h2>Настройка учетных записей сотрудников контрагента</h2>
+  </div>
+
+  <div class="button-wrapper">
+    <div>
+      <button mat-raised-button>Добавить</button>
+      <button mat-raised-button>Разблокировать</button>
+      <button mat-raised-button>Заборкировать</button>
+    </div>
+    <div>
+      <button mat-raised-button (click)="toggle()">Фильтр</button>
+    </div>
+  </div>
+
+  <ng-container *ngIf="!show">
+    <div class="filter-wrapper">
+      <app-form-filter></app-form-filter>
+    </div>
+  </ng-container>
+
+  <div class="table-wrapper">
+    <app-table-data></app-table-data>
+  </div>
+
+</div>

@@ -4,6 +4,13 @@ import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.co
 import { DashboardPanelComponent } from './dashboard-layout/dashboard-panel/dashboard-panel.component';
 import {DashboardRoutingModule} from "./dashboard-routing.module";
 import { DashboardTableComponent } from './dashboard-layout/component/dashboard-table/dashboard-table.component';
+import {TableDataComponent} from "./dashboard-layout/component/table-data/table-data.component";
+import {MatTableModule} from "@angular/material/table";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatButtonModule} from "@angular/material/button";
+import { FormFilterComponent } from './dashboard-layout/component/form-filter/form-filter.component';
+import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
 
 
 
@@ -11,11 +18,18 @@ import { DashboardTableComponent } from './dashboard-layout/component/dashboard-
   declarations: [
     DashboardLayoutComponent,
     DashboardPanelComponent,
-    DashboardTableComponent
+    DashboardTableComponent,
+    TableDataComponent,
+    FormFilterComponent
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatButtonModule,
+    MatInputModule,
+    MatSelectModule,
   ]
 })
 export class DashboardModule { }
