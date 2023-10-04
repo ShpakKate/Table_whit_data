@@ -7,6 +7,6 @@ export interface UserFull {
   create_at: number,
   status: string,
   is_ecp: string,
-  id: number,
+  id: number | boolean,
   user_id: number
 }

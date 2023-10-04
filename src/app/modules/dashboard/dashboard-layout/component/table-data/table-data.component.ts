@@ -1,14 +1,19 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
-import {Observable, Subject, takeUntil} from "rxjs";
+import {MatPaginator, MatPaginatorIntl} from "@angular/material/paginator";
+import {Subject, takeUntil} from "rxjs";
 import {UsersService} from "../../../../../services/users.service";
-import {UserFull} from "../../../../shared/user-full";
+import {UserFull} from "../../../../shared/Interfaces/user-full";
+import {Paginator} from "../../../../shared/components/paginator";
 
 @Component({
   selector: 'app-table-data',
   templateUrl: './table-data.component.html',
-  styleUrls: ['./table-data.component.scss']
+  styleUrls: ['./table-data.component.scss'],
+  providers: [{
+    provide: MatPaginatorIntl,
+    useClass: Paginator
+  }],
 })
 export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
 
@@ -19,11 +24,14 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
     'action', 'login','email', 'phone', 'role', 'updateData', 'createData', 'status', 'salary'
   ];
   dataSource = new MatTableDataSource<any>();
+  public numberOfRecords = 0;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+
   constructor(
     private readonly userService: UsersService,
+    private readonly cdr: ChangeDetectorRef,
   ) {
   }
 
@@ -63,4 +71,22 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
     this.unsubscribe.complete();
   }
 
+  public onCheck(el: boolean) {
+
+    console.log(el)
+
+    if (el) {
+      this.numberOfRecords ++;
+    } else this.numberOfRecords --;
+
+    console.log(this.numberOfRecords)
+  }
+
+  public onCheckAll(el: boolean) {
+    if (el) {
+      this.numberOfRecords = this.arrayUsers.length
+    } else this.numberOfRecords = 0;
+    console.log(this.numberOfRecords);
+
+  }
 }

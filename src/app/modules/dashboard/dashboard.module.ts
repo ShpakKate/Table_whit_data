@@ -11,6 +11,8 @@ import {MatButtonModule} from "@angular/material/button";
 import { FormFilterComponent } from './dashboard-layout/component/form-filter/form-filter.component';
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {FormsModule} from "@angular/forms";
 
 
 
@@ -30,6 +32,8 @@ import {MatSelectModule} from "@angular/material/select";
     MatButtonModule,
     MatInputModule,
     MatSelectModule,
+    MatCheckboxModule,
+    FormsModule,
   ]
 })
 export class DashboardModule { }
