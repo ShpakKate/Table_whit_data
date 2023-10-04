@@ -1,11 +1,106 @@
+@mixin text {
+  font-size: 14px;
+  font-family: Moscow Sans;
+  word-wrap: break-word
+}
+
 table {
   width: 100%;
 
   th {
+    @include text;
     background-color: #DA2032;
     color: #FFFFFF;
     text-align: center;
+    font-weight: 700;
+    line-height: 18px;
+  }
+
+  td {
+    @include text;
+    color: #282828;
+    font-weight: 300;
+    line-height: 24px;
+    text-align: -webkit-center;
   }
 }
 
+.login-header-wrapper {
+  display: flex;
+  flex-direction: row;
+
+  input[type='checkbox']:checked:after {
+    content: '\2713';
+    color: #282828;
+  }
+
+  input[type='checkbox']{
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    appearance:none;
+    box-shadow: none;
+    font-size: 1em;
+    margin-right: 0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: white;
+    border-radius: 4px;
+    border: 1px #A2A9B1 solid;
+  }
+
+  span {
+    line-height: 2rem;
+  }
+}
+
+.active {
+  @include text;
+  color: #25B553;
+  font-weight: 300;
+  line-height: 24px;
+}
+
+.blocked {
+  @include text;
+  color: #FF001F;
+  font-weight: 300;
+  line-height: 18px;
+}
+
+.green-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #25B553;
+
+  &::after {
+    content: '\2713';
+    color: #FAFAFA;
+  }
+}
+
+.red-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #FF001F;
+
+  &::after {
+    content: '\00D7';
+    color: #FAFAFA;
+  }
+}
+
+.paginator-wrapper {
+  display: flex;
+
+  &:first-child {
+    flex: 3;
+  }
+
+  &:last-child {
+    flex: 9;
+  }
+}
 
