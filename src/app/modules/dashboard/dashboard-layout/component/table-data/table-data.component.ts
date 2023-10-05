@@ -1,10 +1,11 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator, MatPaginatorIntl} from "@angular/material/paginator";
 import {Subject, takeUntil} from "rxjs";
 import {UsersService} from "../../../../../services/users.service";
-import {UserFull} from "../../../../shared/Interfaces/user-full";
+import {UserFull} from "../../../../shared/interfaces/user-full";
 import {Paginator} from "../../../../shared/components/paginator";
+import {SelectionModel} from "@angular/cdk/collections";
 
 @Component({
   selector: 'app-table-data',
@@ -26,12 +27,18 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
   dataSource = new MatTableDataSource<any>();
   public numberOfRecords = 0;
 
+  public selection?:  any;
+  public initialSelection = [];
+  public allowMultiSelect = true;
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
 
   constructor(
     private readonly userService: UsersService,
-    private readonly cdr: ChangeDetectorRef,
+    private readonly elementRef: ElementRef,
+    private readonly ren: Renderer2,
+
   ) {
   }
 
@@ -60,10 +67,21 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
         console.log(this.dataSource.data)
       }
     )
+
+    this.selection = new SelectionModel<any>(this.allowMultiSelect, this.initialSelection);
+
+    this.dataSource.filterPredicate =
+      (data: UserFull, filter: string) => data.phone.toString().indexOf(filter) != -1;
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+
+    const table = this.elementRef.nativeElement.querySelector('.mat-mdc-table');
+    const body =  this.elementRef.nativeElement.querySelector('tbody.mdc-data-table__content');
+
+    this.ren.setStyle(table,'table-layout', 'fixed');
+    this.ren.setStyle(body, 'background', '#FFFFFF');
   }
 
   ngOnDestroy() {
@@ -71,22 +89,41 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
     this.unsubscribe.complete();
   }
 
-  public onCheck(el: boolean) {
+  // public onCheck(el: boolean) {
+  //
+  //   if (el) {
+  //     this.numberOfRecords ++;
+  //   } else this.numberOfRecords --;
+  //
+  //   this.countService.changeCount(this.numberOfRecords);
+  //   console.log(this.numberOfRecords)
+  // }
+  //
+  // public onCheckAll(el: boolean) {
+  //   if (el) {
+  //     this.numberOfRecords = this.arrayUsers.length;
+  //
+  //   } else this.numberOfRecords = 0;
+  //
+  //   this.countService.changeCount(this.numberOfRecords);
+  //   console.log(this.numberOfRecords);
+  // }
 
-    console.log(el)
-
-    if (el) {
-      this.numberOfRecords ++;
-    } else this.numberOfRecords --;
-
-    console.log(this.numberOfRecords)
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected == numRows;
   }
 
-  public onCheckAll(el: boolean) {
-    if (el) {
-      this.numberOfRecords = this.arrayUsers.length
-    } else this.numberOfRecords = 0;
-    console.log(this.numberOfRecords);
-
+  toggleAllRows() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
 }

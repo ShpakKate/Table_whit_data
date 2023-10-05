@@ -27,11 +27,9 @@ table {
 
 .login-header-wrapper {
   display: flex;
-  flex-direction: row;
 
-  input[type='checkbox']:checked:after {
-    content: '\2713';
-    color: #282828;
+    .checkbox {
+      margin-right: 1rem;
   }
 
   input[type='checkbox']{
@@ -52,6 +50,11 @@ table {
   span {
     line-height: 2rem;
   }
+}
+
+.paginator-wrapper {
+  padding: 1.5rem 0;
+  background: #FFFFFF;
 }
 
 .active {
@@ -92,15 +95,5 @@ table {
   }
 }
 
-.paginator-wrapper {
-  display: flex;
-
-  &:first-child {
-    flex: 3;
-  }
-
-  &:last-child {
-    flex: 9;
-  }
+svg.mdc-checkbox__checkmark {
 }
-

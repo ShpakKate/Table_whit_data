@@ -1,15 +1,24 @@
 .wrapper {
-  padding: 2rem;
+  margin: 2rem;
+
+}
+
+.backArrow {
+  &:before {
+    content: '\003C';
+    margin-right: 0.5rem;
+    line-height: 1rem;
+  }
 }
 
 .title-wrapper {
-  margin: 1.5rem;
+  margin: 1.5rem 0;
 }
 
 .button-wrapper {
   display: flex;
   justify-content: space-between;
-  margin: 1.5rem;
+  margin: 1.5rem 0;
 
   button {
     background: #DA2032;
@@ -21,10 +30,10 @@
 }
 
 .filter-wrapper {
-  margin: 1.5rem;
+  margin: 1.5rem 0;
   background: #FFFFFF;
 }
 
 .table-wrapper {
-  margin: 1.5rem;
+  margin: 1.5rem 0;
 }

@@ -11,11 +11,5 @@ export class DashboardTableComponent {
 
   toggle() {
     this.show = !this.show;
-
-    // CHANGE THE NAME OF THE BUTTON.
-  //   if (this.show)
-  //     this.buttonName = "Show";
-  //   else
-  //     this.buttonName = "Hide";
   }
 }
