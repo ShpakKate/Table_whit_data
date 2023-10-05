@@ -1,38 +1,80 @@
 <div class="wrapper">
   <p>Фильтр</p>
+  <form [formGroup]="form" class="form-wrapper">
 
-  <form>
-    <mat-form-field>
-      <mat-label>Логин</mat-label>
-      <input matInput>
+    <div class="form-control-wrapper">
+     <label>Логин</label>
+     <mat-form-field appearance="outline" hideRequiredMarker>
+       <input matInput (keyup)="applyFilter($event)" formControlName="name">
+       <mat-error *ngIf="!form.get('name')?.valid && form.get('name')?.dirty">
+         Имя невалидно
+       </mat-error>
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>Телефон</mat-label>
-      <input matInput>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Дата создания</mat-label>
-      <input matInput>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Статус</mat-label>
-      <input matInput>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>E-mail</mat-label>
-      <input matInput>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Роль</mat-label>
-      <mat-select>
+   </div>
+
+    <div class="form-control-wrapper">
+      <label>Телефон</label>
+      <mat-form-field appearance="outline" hideRequiredMarker>
+      <input matInput formControlName="phone">
+      <mat-error *ngIf="!form.get('phone')?.valid && form.get('phone')?.dirty">
+        Номер в формате +7(999) 888-88-88
+      </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-control-wrapper">
+      <label>Дата изменения</label>
+      <mat-form-field appearance="outline" hideRequiredMarker>
+      <input matInput formControlName="create_at">
+      <mat-error *ngIf="!form.get('create_at')?.valid && form.get('create_at')?.dirty">
+        Дата невалидна
+      </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-control-wrapper">
+      <label>Статус</label>
+      <mat-form-field appearance="outline" hideRequiredMarker>
+        <input matInput formControlName="status">
+        <mat-error *ngIf="!form.get('create_at')?.valid && form.get('create_at')?.dirty">
+          Дата невалидна
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-control-wrapper">
+      <label>E-mail</label>
+      <mat-form-field appearance="outline" hideRequiredMarker>
+      <input matInput formControlName="email">
+      <mat-error *ngIf="!form.get('create_at')?.valid && form.get('create_at')?.dirty">
+        Дата невалидна
+      </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-control-wrapper">
+      <label>Роль</label>
+      <mat-form-field appearance="outline" hideRequiredMarker>
+      <mat-select formControlName="is_admin">
         <mat-option value="one">First option</mat-option>
         <mat-option value="two">Second option</mat-option>
       </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Дата изменения</mat-label>
-      <input matInput>
-    </mat-form-field>
+      <mat-error *ngIf="!form.get('create_at')?.valid && form.get('create_at')?.dirty">
+        Дата невалидна
+      </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-control-wrapper">
+      <label>Дата изменения</label>
+      <mat-form-field appearance="outline" hideRequiredMarker>
+      <input matInput formControlName="update_at">
+      <mat-error *ngIf="!form.get('create_at')?.valid && form.get('create_at')?.dirty">
+        Дата невалидна
+      </mat-error>
+      </mat-form-field>
+    </div>
+
   </form>
 
   <button mat-raised-button>Применить</button>

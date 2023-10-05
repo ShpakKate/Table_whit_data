@@ -12,9 +12,10 @@ import { FormFilterComponent } from './dashboard-layout/component/form-filter/fo
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CustomPaginationDirective} from "../shared/directives/custom-pagination.directive";
 import {SharedModule} from "../shared/shared.module";
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,8 @@ import {SharedModule} from "../shared/shared.module";
     FormsModule,
     CustomPaginationDirective,
     SharedModule,
+    ReactiveFormsModule,
+    MatFormFieldModule
   ]
 })
 export class DashboardModule { }

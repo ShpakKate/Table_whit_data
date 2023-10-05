@@ -6,6 +6,7 @@ import {UsersService} from "../../../../../services/users.service";
 import {UserFull} from "../../../../shared/interfaces/user-full";
 import {Paginator} from "../../../../shared/components/paginator";
 import {SelectionModel} from "@angular/cdk/collections";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-table-data',
@@ -20,24 +21,26 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
 
   private unsubscribe = new Subject();
   private userSet: any;
-  private arrayUsers: UserFull[] = [];
+  public arrayUsers: UserFull[] = [];
   displayedColumns: string[] = [
     'action', 'login','email', 'phone', 'role', 'updateData', 'createData', 'status', 'salary'
   ];
-  dataSource = new MatTableDataSource<any>();
+  public dataSource = new MatTableDataSource<UserFull>();
   public numberOfRecords = 0;
 
   public selection?:  any;
   public initialSelection = [];
   public allowMultiSelect = true;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  public  form!: FormGroup;
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private readonly userService: UsersService,
     private readonly elementRef: ElementRef,
     private readonly ren: Renderer2,
+    private readonly fb: FormBuilder,
 
   ) {
   }
@@ -51,8 +54,6 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
         const users = data.users;
         const part2 = data.data;
 
-        console.log(data)
-
         users.forEach( (user: any) => {
           let num = user.id;
           part2.filter( (userID: any) => {
@@ -63,15 +64,11 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
           })
         })
         this.dataSource.data = this.arrayUsers;
-
-        console.log(this.dataSource.data)
       }
     )
 
     this.selection = new SelectionModel<any>(this.allowMultiSelect, this.initialSelection);
-
-    this.dataSource.filterPredicate =
-      (data: UserFull, filter: string) => data.phone.toString().indexOf(filter) != -1;
+    this.dataSource.filterPredicate = this.filterBySubject();
   }
 
   ngAfterViewInit() {
@@ -88,26 +85,6 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
     this.unsubscribe.next(null);
     this.unsubscribe.complete();
   }
-
-  // public onCheck(el: boolean) {
-  //
-  //   if (el) {
-  //     this.numberOfRecords ++;
-  //   } else this.numberOfRecords --;
-  //
-  //   this.countService.changeCount(this.numberOfRecords);
-  //   console.log(this.numberOfRecords)
-  // }
-  //
-  // public onCheckAll(el: boolean) {
-  //   if (el) {
-  //     this.numberOfRecords = this.arrayUsers.length;
-  //
-  //   } else this.numberOfRecords = 0;
-  //
-  //   this.countService.changeCount(this.numberOfRecords);
-  //   console.log(this.numberOfRecords);
-  // }
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -126,4 +103,44 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  filterBySubject() {
+    let filterFunction =
+      (data: UserFull, filter: string): boolean => {
+        if (filter) {
+          const name = data.name;
+          for (let i = 0; i < name.length; i++) {
+            if (name[i].indexOf(filter) != -1) {
+              return true;
+            }
+          }
+          return false;
+        } else {
+          return true;
+        }
+      };
+    return filterFunction;
+  }
+
 }
+
+
+
+// public onCheck(el: boolean) {
+//
+//   if (el) {
+//     this.numberOfRecords ++;
+//   } else this.numberOfRecords --;
+//
+//   this.countService.changeCount(this.numberOfRecords);
+//   console.log(this.numberOfRecords)
+// }
+//
+// public onCheckAll(el: boolean) {
+//   if (el) {
+//     this.numberOfRecords = this.arrayUsers.length;
+//
+//   } else this.numberOfRecords = 0;
+//
+//   this.countService.changeCount(this.numberOfRecords);
+//   console.log(this.numberOfRecords);
+// }

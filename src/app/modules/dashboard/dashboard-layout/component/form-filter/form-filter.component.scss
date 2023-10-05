@@ -2,6 +2,17 @@
   padding: 2rem 2.5rem;
 }
 
+.form-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-control-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 p {
   color: #282828;
   font-size: 20px;
