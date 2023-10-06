@@ -4,6 +4,10 @@
   word-wrap: break-word
 }
 
+:host ::ng-deep .mdc-checkbox__background {
+  background: #FFFFFF !important;
+}
+
 table {
   width: 100%;
 
@@ -27,10 +31,7 @@ table {
 
 .login-header-wrapper {
   display: flex;
-
-    .checkbox {
-      margin-right: 1rem;
-  }
+  position: relative;
 
   input[type='checkbox']{
     text-align: center;
@@ -47,53 +48,60 @@ table {
     border: 1px #A2A9B1 solid;
   }
 
-  span {
-    line-height: 2rem;
+  div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(10%, -50%);
+  }
+}
+
+.checkbox {
+
+  :host ::ng-deep .mat-mdc-checkbox .mdc-checkbox__background {
+    background: aquamarine;
   }
 }
 
 .paginator-wrapper {
-  padding: 1.5rem 0;
-  background: #FFFFFF;
+padding: 1.5rem 0;
+background: #FFFFFF;
 }
 
 .active {
-  @include text;
-  color: #25B553;
-  font-weight: 300;
-  line-height: 24px;
+@include text;
+color: #25B553;
+font-weight: 300;
+line-height: 24px;
 }
 
 .blocked {
-  @include text;
-  color: #FF001F;
-  font-weight: 300;
-  line-height: 18px;
+@include text;
+color: #FF001F;
+font-weight: 300;
+line-height: 18px;
 }
 
 .green-circle {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: #25B553;
+width: 24px;
+height: 24px;
+border-radius: 50%;
+background: #25B553;
 
-  &::after {
-    content: '\2713';
-    color: #FAFAFA;
-  }
+&::after {
+content: '\2713';
+color: #FAFAFA;
+}
 }
 
 .red-circle {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: #FF001F;
+width: 24px;
+height: 24px;
+border-radius: 50%;
+background: #FF001F;
 
-  &::after {
-    content: '\00D7';
-    color: #FAFAFA;
-  }
+&::after {
+content: '\00D7';
+color: #FAFAFA;
 }
-
-svg.mdc-checkbox__checkmark {
 }

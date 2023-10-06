@@ -6,7 +6,11 @@ import {UsersService} from "../../../../../services/users.service";
 import {UserFull} from "../../../../shared/interfaces/user-full";
 import {Paginator} from "../../../../shared/components/paginator";
 import {SelectionModel} from "@angular/cdk/collections";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {MatSelectChange} from "@angular/material/select";
+
+export interface EmpFilter {
+  name:string;
+}
 
 @Component({
   selector: 'app-table-data',
@@ -27,12 +31,20 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
   ];
   public dataSource = new MatTableDataSource<UserFull>();
   public numberOfRecords = 0;
-
   public selection?:  any;
   public initialSelection = [];
   public allowMultiSelect = true;
+  private filteredFormForFilter!: any;
 
-  public  form!: FormGroup;
+  filterValues: any = {
+    name: '',
+    email: '',
+    phone: '',
+    is_admin: '',
+    update_at: '',
+    create_at: '',
+    status: '',
+  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -40,32 +52,13 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
     private readonly userService: UsersService,
     private readonly elementRef: ElementRef,
     private readonly ren: Renderer2,
-    private readonly fb: FormBuilder,
-
   ) {
   }
 
   ngOnInit() {
-    this.userService.getUsers().pipe(
-      takeUntil(this.unsubscribe)
-    )
-      .subscribe(
-      data => {
-        const users = data.users;
-        const part2 = data.data;
+    this.loadData();
 
-        users.forEach( (user: any) => {
-          let num = user.id;
-          part2.filter( (userID: any) => {
-            if (num === userID.user_id) {
-              this.userSet = {...user, ...userID} as UserFull;
-              this.arrayUsers.push(this.userSet);
-            }
-          })
-        })
-        this.dataSource.data = this.arrayUsers;
-      }
-    )
+    this.getFilteredForm();
 
     this.selection = new SelectionModel<any>(this.allowMultiSelect, this.initialSelection);
     this.dataSource.filterPredicate = this.filterBySubject();
@@ -86,6 +79,40 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
     this.unsubscribe.complete();
   }
 
+  loadData() {
+    this.userService.getUsers()
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        data => {
+          const users = data.users;
+          const part2 = data.data;
+
+          users.forEach( (user: any) => {
+            let num = user.id;
+            part2.filter( (userID: any) => {
+              if (num === userID.user_id) {
+                this.userSet = {...user, ...userID} as UserFull;
+                this.arrayUsers.push(this.userSet);
+              }
+            })
+          })
+          this.dataSource.data = this.arrayUsers;
+        }
+      )
+  }
+
+  getFilteredForm() {
+    this.filteredFormForFilter = this.userService.getFilteredForm()
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        data => {
+          this.filteredFormForFilter = data;
+          this.filterValues.name = data.name.value;
+          this.dataSource.filter = JSON.stringify(this.filterValues);
+        }
+      )
+  }
+
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
@@ -103,13 +130,30 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  apply(data: any) {
+    for (let key in data) {
+      if (data[key][1] !== '') {
+        const value = data[key][0];
+        console.log(value)
+        // for (let i = 0; i < value.length; i++) {
+        //   if (value[i].indexOf(data[key][1]) != -1) {
+        //     return true;
+        //   }
+        // }
+        // this.dataSource.filterPredicate = this.filterBySubject(data[key][0], data[key][1]);
+      }
+    }
+  }
+
   filterBySubject() {
     let filterFunction =
       (data: UserFull, filter: string): boolean => {
+        console.log(data, filter)
         if (filter) {
-          const name = data.name;
-          for (let i = 0; i < name.length; i++) {
-            if (name[i].indexOf(filter) != -1) {
+          const value = data.name
+          console.log(value)
+          for (let i = 0; i < value.length; i++) {
+            if (value[i].indexOf(filter) != -1) {
               return true;
             }
           }

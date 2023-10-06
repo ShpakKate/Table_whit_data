@@ -36,7 +36,7 @@
       <label>Статус</label>
       <mat-form-field appearance="outline" hideRequiredMarker>
         <input matInput formControlName="status">
-        <mat-error *ngIf="!form.get('create_at')?.valid && form.get('create_at')?.dirty">
+        <mat-error *ngIf="!form.get('status')?.valid && form.get('status')?.dirty">
           Дата невалидна
         </mat-error>
       </mat-form-field>
@@ -46,8 +46,8 @@
       <label>E-mail</label>
       <mat-form-field appearance="outline" hideRequiredMarker>
       <input matInput formControlName="email">
-      <mat-error *ngIf="!form.get('create_at')?.valid && form.get('create_at')?.dirty">
-        Дата невалидна
+      <mat-error *ngIf="!form.get('email')?.valid && form.get('email')?.dirty">
+        Недопустимые символы
       </mat-error>
       </mat-form-field>
     </div>
@@ -60,7 +60,7 @@
         <mat-option value="two">Second option</mat-option>
       </mat-select>
       <mat-error *ngIf="!form.get('create_at')?.valid && form.get('create_at')?.dirty">
-        Дата невалидна
+        Роль
       </mat-error>
       </mat-form-field>
     </div>
@@ -69,7 +69,7 @@
       <label>Дата изменения</label>
       <mat-form-field appearance="outline" hideRequiredMarker>
       <input matInput formControlName="update_at">
-      <mat-error *ngIf="!form.get('create_at')?.valid && form.get('create_at')?.dirty">
+      <mat-error *ngIf="!form.get('update_at')?.valid && form.get('update_at')?.dirty">
         Дата невалидна
       </mat-error>
       </mat-form-field>
@@ -77,7 +77,7 @@
 
   </form>
 
-  <button mat-raised-button>Применить</button>
-  <button mat-raised-button>Отмена</button>
-  <button mat-raised-button>Сбросить</button>
+  <button mat-raised-button (click)="apply()">Применить</button>
+  <button mat-raised-button (click)="cancel()">Отмена</button>
+  <button mat-raised-button (click)="reset()">Сбросить</button>
 </div>

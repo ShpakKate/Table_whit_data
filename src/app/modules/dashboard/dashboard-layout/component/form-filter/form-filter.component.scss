@@ -11,6 +11,10 @@
 .form-control-wrapper {
   display: flex;
   flex-direction: column;
+
+  :host ::ng-deep input {
+    height: 4rem;
+  }
 }
 
 p {

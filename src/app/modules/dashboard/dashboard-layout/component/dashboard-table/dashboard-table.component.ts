@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {UserFull} from "../../../../shared/interfaces/user-full";
 
 @Component({
   selector: 'app-dashboard-table',
@@ -7,9 +8,18 @@ import { Component } from '@angular/core';
 })
 export class DashboardTableComponent {
 
-  show = false
+  public show = true;
 
   toggle() {
     this.show = !this.show;
+    console.log(this.show)
+  }
+
+  toggleChange($event: boolean) {
+    this.show = $event;
+  }
+
+  applyFilterForm($event: UserFull) {
+    console.log($event);
   }
 }
