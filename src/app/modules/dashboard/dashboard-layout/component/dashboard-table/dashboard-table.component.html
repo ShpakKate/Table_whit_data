@@ -14,13 +14,16 @@
       <button mat-raised-button>Заборкировать</button>
     </div>
     <div>
-      <button mat-raised-button (click)="toggle()">Фильтр</button>
+      <button mat-raised-button [ngClass]="{'red' : !show, 'gray': show}" (click)="toggle()">Фильтр</button>
     </div>
   </div>
 
-  <ng-container *ngIf="!show">
+  <ng-container *ngIf="show">
     <div class="filter-wrapper">
-      <app-form-filter></app-form-filter>
+      <app-form-filter
+        [show]="show"
+        (close)="toggleChange($event)"
+      ></app-form-filter>
     </div>
   </ng-container>
 
