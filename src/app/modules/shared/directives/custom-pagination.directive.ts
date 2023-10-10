@@ -53,12 +53,5 @@ export class CustomPaginationDirective implements OnInit, AfterViewInit, OnDestr
     const numberOFPage = nativeElement.querySelector('.mat-mdc-form-field');
     const text2 = this.ren.createText(`записей:`);
     this.ren.appendChild(numberOFPage, text2);
-
-
-    const textNumber = nativeElement.querySelector('.mat-mdc-select-value-text');
-
-
-    // this.ren.setStyle(textNumber, 'color', '#666F78');
-    // this.ren.setStyle(textNumber, 'font-size', '25px');
   }
 }

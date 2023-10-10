@@ -3,7 +3,8 @@ import {MatTableDataSource} from "@angular/material/table";
 import {UserFull} from "../../../../shared/interfaces/user-full";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UsersService} from "../../../../../services/users.service";
-import {Subject, takeUntil} from "rxjs";
+import {Subject} from "rxjs";
+import {DateUnixPipe} from "../../../../shared/pipe/date-unix.pipe";
 
 @Component({
   selector: 'app-form-filter',
@@ -20,11 +21,11 @@ export class FormFilterComponent implements OnInit, OnDestroy {
   @Input() name?: string;
   @Input() show!: boolean;
   @Output() close = new EventEmitter();
-  @Output() getFilterForm = new EventEmitter();
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly usersService: UsersService,
+    private readonly dateUnix: DateUnixPipe
   ) {
   }
 
@@ -32,9 +33,6 @@ export class FormFilterComponent implements OnInit, OnDestroy {
     this.loadData();
 
     this.dataSource.data = this.arrUsers;
-
-    // this.dataSource.filterPredicate =
-    //   (data: UserFull, filter: string) => data.name.indexOf(filter) != -1;
   }
 
   ngOnDestroy() {
@@ -57,23 +55,32 @@ export class FormFilterComponent implements OnInit, OnDestroy {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    console.log(filterValue)
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   apply() {
-    this.getFilterForm.emit(this.form.value);
-    this.usersService.isFilteredData(this.form.value);
-  }
+    if (this.form.get('update_at')?.value !== '') {
+      const maskedVal =  this.dateUnix.transform(this.form.get('update_at')?.value);
+      this.form.patchValue({update_at: maskedVal});
+    }
 
+    console.log(this.form.value)
+    this.usersService.isFilteredData(this.form.value);
+
+    this.form.markAsPristine();
+    this.form.markAsUntouched();
+  }
 
   cancel() {
     this.show = false;
     this.close.emit(false);
+
+    this.reset();
   }
 
   reset() {
-    this.form.reset();
+    this.loadData();
+    this.usersService.isFilteredData(this.form.value);
     this.form.markAsPristine();
   }
 }

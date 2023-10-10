@@ -36,9 +36,4 @@ $table-app-theme: mat.define-light-theme((
 @import "variables";
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-$c-red: #DA2032;
-$c-gray-dark: #666F78;
-$c-gray-light: #A2A9B1;
-$c-white: #FFFFFF;
+:root{--my-var:#FFC0CB}

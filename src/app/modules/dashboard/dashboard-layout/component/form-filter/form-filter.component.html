@@ -17,26 +17,23 @@
       <mat-form-field appearance="outline" hideRequiredMarker>
       <input matInput formControlName="phone">
       <mat-error *ngIf="!form.get('phone')?.valid && form.get('phone')?.dirty">
-        Номер в формате +7(999) 888-88-88
+        +7(999) 888-88-88
       </mat-error>
       </mat-form-field>
     </div>
 
     <div class="form-control-wrapper">
-      <label>Дата изменения</label>
+      <label>Дата создания</label>
       <mat-form-field appearance="outline" hideRequiredMarker>
-      <input matInput formControlName="create_at">
-      <mat-error *ngIf="!form.get('create_at')?.valid && form.get('create_at')?.dirty">
-        Дата невалидна
-      </mat-error>
-      </mat-form-field>
-    </div>
-
-    <div class="form-control-wrapper">
-      <label>Статус</label>
-      <mat-form-field appearance="outline" hideRequiredMarker>
-        <input matInput formControlName="status">
-        <mat-error *ngIf="!form.get('status')?.valid && form.get('status')?.dirty">
+        <input matInput [matDatepicker]="createdate" formControlName="create_at" readonly>
+        <mat-datepicker-toggle matIconSuffix [for]="createdate"></mat-datepicker-toggle>
+        <mat-datepicker #createdate>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+        <mat-error *ngIf="!form.get('create_at')?.valid && form.get('create_at')?.dirty">
           Дата невалидна
         </mat-error>
       </mat-form-field>
@@ -56,22 +53,39 @@
       <label>Роль</label>
       <mat-form-field appearance="outline" hideRequiredMarker>
       <mat-select formControlName="is_admin">
-        <mat-option value="one">First option</mat-option>
-        <mat-option value="two">Second option</mat-option>
+        <mat-option value="false">Пользователь</mat-option>
+        <mat-option value="true">Администратор</mat-option>
       </mat-select>
-      <mat-error *ngIf="!form.get('create_at')?.valid && form.get('create_at')?.dirty">
-        Роль
-      </mat-error>
       </mat-form-field>
     </div>
 
     <div class="form-control-wrapper">
       <label>Дата изменения</label>
       <mat-form-field appearance="outline" hideRequiredMarker>
-      <input matInput formControlName="update_at">
+      <input matInput
+             [matDatepicker]="updatedate"
+             formControlName="update_at"
+             readonly>
+        <mat-datepicker-toggle matIconSuffix [for]="updatedate"></mat-datepicker-toggle>
+        <mat-datepicker #updatedate>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
       <mat-error *ngIf="!form.get('update_at')?.valid && form.get('update_at')?.dirty">
         Дата невалидна
       </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-control-wrapper">
+      <label>Статус</label>
+      <mat-form-field appearance="outline" hideRequiredMarker>
+        <mat-select formControlName="status">
+          <mat-option value="ACTIVE">Активен</mat-option>
+          <mat-option value="BLOCKED">Заблокирован</mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {UserFull} from "../../../../shared/interfaces/user-full";
 
 @Component({
@@ -12,7 +12,6 @@ export class DashboardTableComponent {
 
   toggle() {
     this.show = !this.show;
-    console.log(this.show)
   }
 
   toggleChange($event: boolean) {
@@ -20,6 +19,5 @@ export class DashboardTableComponent {
   }
 
   applyFilterForm($event: UserFull) {
-    console.log($event);
   }
 }

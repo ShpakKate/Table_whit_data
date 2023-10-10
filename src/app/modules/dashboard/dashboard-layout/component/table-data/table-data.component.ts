@@ -6,11 +6,6 @@ import {UsersService} from "../../../../../services/users.service";
 import {UserFull} from "../../../../shared/interfaces/user-full";
 import {Paginator} from "../../../../shared/components/paginator";
 import {SelectionModel} from "@angular/cdk/collections";
-import {MatSelectChange} from "@angular/material/select";
-
-export interface EmpFilter {
-  name:string;
-}
 
 @Component({
   selector: 'app-table-data',
@@ -34,7 +29,6 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
   public selection?:  any;
   public initialSelection = [];
   public allowMultiSelect = true;
-  private filteredFormForFilter!: any;
 
   filterValues: any = {
     name: '',
@@ -58,14 +52,15 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
   ngOnInit() {
     this.loadData();
 
-    this.getFilteredForm();
-
     this.selection = new SelectionModel<any>(this.allowMultiSelect, this.initialSelection);
-    this.dataSource.filterPredicate = this.filterBySubject();
+
+    this.dataSource.filterPredicate = this.createFilter();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+
+    this.getFilteredForm();
 
     const table = this.elementRef.nativeElement.querySelector('.mat-mdc-table');
     const body =  this.elementRef.nativeElement.querySelector('tbody.mdc-data-table__content');
@@ -97,20 +92,68 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
             })
           })
           this.dataSource.data = this.arrayUsers;
+          console.log(this.dataSource.data);
         }
       )
   }
 
   getFilteredForm() {
-    this.filteredFormForFilter = this.userService.getFilteredForm()
+    this.userService.getFilteredForm()
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         data => {
-          this.filteredFormForFilter = data;
-          this.filterValues.name = data.name.value;
-          this.dataSource.filter = JSON.stringify(this.filterValues);
+          if (data) {
+            this.resetFilters();
+            this.filterValues = data;
+            console.log(this.filterValues);
+
+            this.dataSource.filter = JSON.stringify(this.filterValues).trim().toLowerCase();
+          } else return;
         }
       )
+  }
+
+  private createFilter(): (user: UserFull, filter: string) => boolean {
+    let filterFunction = (user: UserFull, filter: string): boolean => {
+      let searchTerms = JSON.parse(filter);
+      let isFilterSet = false;
+
+      for (const col in searchTerms) {
+        if (searchTerms[col].toString() !== '') {
+          isFilterSet = true;
+        } else {
+          delete searchTerms[col];
+        }
+      }
+      console.log(searchTerms)
+      let nameSearch = () => {
+        let found = false;
+        let notFound: boolean;
+        if (isFilterSet) {
+          for (const col in searchTerms) {
+            searchTerms[col].trim().toLowerCase().split(' ').forEach((word: string) => {
+              if (notFound) {
+                return;
+              } else  {
+                console.log(user[(col as keyof UserFull)])
+                if (user[(col as keyof UserFull)].toString().toLowerCase().includes(word) && isFilterSet) {
+                  found = true;
+                } else {
+                  found = false;
+                  notFound = true;
+                  return;
+                }
+              }
+            });
+          }
+          return found
+        } else {
+          return true;
+        }
+      }
+      return nameSearch()
+    }
+    return filterFunction;
   }
 
   isAllSelected() {
@@ -125,46 +168,10 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
       this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  resetFilters() {
+    this.filterValues = {};
+    this.dataSource.filter = "";
   }
-
-  apply(data: any) {
-    for (let key in data) {
-      if (data[key][1] !== '') {
-        const value = data[key][0];
-        console.log(value)
-        // for (let i = 0; i < value.length; i++) {
-        //   if (value[i].indexOf(data[key][1]) != -1) {
-        //     return true;
-        //   }
-        // }
-        // this.dataSource.filterPredicate = this.filterBySubject(data[key][0], data[key][1]);
-      }
-    }
-  }
-
-  filterBySubject() {
-    let filterFunction =
-      (data: UserFull, filter: string): boolean => {
-        console.log(data, filter)
-        if (filter) {
-          const value = data.name
-          console.log(value)
-          for (let i = 0; i < value.length; i++) {
-            if (value[i].indexOf(filter) != -1) {
-              return true;
-            }
-          }
-          return false;
-        } else {
-          return true;
-        }
-      };
-    return filterFunction;
-  }
-
 }
 
 

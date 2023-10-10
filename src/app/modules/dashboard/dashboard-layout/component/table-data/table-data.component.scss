@@ -4,8 +4,8 @@
   word-wrap: break-word
 }
 
-:host ::ng-deep .mdc-checkbox__background {
-  background: #FFFFFF !important;
+:host ::ng-deep .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background {
+  background: #FFFFFF;
 }
 
 table {
