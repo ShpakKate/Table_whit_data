@@ -1,3 +1,47 @@
 .panel {
   height: 100%;
+
+  mat-list-item:nth-child(2) {
+    padding-top: 1rem;
+  }
+
+  ::ng-deep .mdc-list-item__primary-text, .mdc-list-item__primary-text:hover, .mat-mdc-list-item:hover{
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+
+    &:hover {
+      color: #FFFFFF;
+    }
+  }
+
+  ::ng-deep .mdc-list-item__secondary-text {
+    color: #E5E5E5;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 23px;
+  }
+}
+
+::ng-deep .mat-mdc-list-item:hover {
+  background: #A2A9B1;
+}
+
+:host ::ng-deep .mdc-list-item:hover .mdc-list-item__primary-text {
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.list {
+  color: #E8EBED;
+  font-size: 14px;
+  line-height: 18px;
+  margin-top: 0.5rem;
+
+  &:active, &:hover {
+    text-decoration-line: underline;
+  }
 }

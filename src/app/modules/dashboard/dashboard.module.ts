@@ -20,6 +20,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatIconModule} from "@angular/material/icon";
 import {MatNativeDateModule} from "@angular/material/core";
 import {DateUnixPipe} from "../shared/pipe/date-unix.pipe";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -29,22 +30,24 @@ import {DateUnixPipe} from "../shared/pipe/date-unix.pipe";
     TableDataComponent,
     FormFilterComponent
   ],
-    imports: [
-        CommonModule,
-        DashboardRoutingModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatButtonModule,
-        MatInputModule,
-        MatSelectModule,
-        MatCheckboxModule,
-        FormsModule,
-        CustomPaginationDirective,
-        SharedModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-    ],
+  imports: [
+    CommonModule,
+    DashboardRoutingModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatButtonModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    FormsModule,
+    CustomPaginationDirective,
+    SharedModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatIconModule,
+    MatListModule,
+  ],
 })
 export class DashboardModule { }

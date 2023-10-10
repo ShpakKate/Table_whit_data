@@ -1,6 +1,9 @@
+@media (max-width: 1024px) {
+
+}
+
 .wrapper {
   margin: 2rem;
-
 }
 
 .backArrow {
@@ -24,7 +27,7 @@
     background: #DA2032;
     color: #FFFFFF;
     margin-right: 1.5rem;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     border-radius: 0.5rem;
   }
 }
