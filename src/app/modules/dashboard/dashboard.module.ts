@@ -13,13 +13,11 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {CustomPaginationDirective} from "../shared/directives/custom-pagination.directive";
 import {SharedModule} from "../shared/shared.module";
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatIconModule} from "@angular/material/icon";
 import {MatNativeDateModule} from "@angular/material/core";
-import {DateUnixPipe} from "../shared/pipe/date-unix.pipe";
 import {MatListModule} from "@angular/material/list";
 
 @NgModule({
@@ -40,7 +38,6 @@ import {MatListModule} from "@angular/material/list";
     MatSelectModule,
     MatCheckboxModule,
     FormsModule,
-    CustomPaginationDirective,
     SharedModule,
     ReactiveFormsModule,
     MatFormFieldModule,

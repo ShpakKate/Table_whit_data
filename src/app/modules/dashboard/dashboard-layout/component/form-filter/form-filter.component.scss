@@ -1,12 +1,27 @@
+@media (min-width: 769px) {
+  .form-wrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .form-wrapper {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 769px) {
+@media (max-width: 600px) {
   .form-wrapper {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .buttons-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      margin: 0 auto 0.5rem auto;
+    }
   }
 }
 
@@ -26,6 +41,7 @@
 
   label {
     font-weight: 700;
+    font-size: 16px;
     line-height: 20px;
     margin-bottom: 0.5rem;
   }
@@ -33,6 +49,7 @@
   ::ng-deep .mat-mdc-icon-button.mat-mdc-button-base .mat-icon {
     background: #A2A9B1;
     border-radius: 50%;
+    color: #FFFFFF;
   }
 
   //input:placeholder-shown{
@@ -104,6 +121,7 @@ mat-label {
   color: #FFFFFF;
   width: 9rem;
   margin-right: 1.5rem;
+  margin-bottom: 0.5rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   border-radius: 0.5rem;
 }

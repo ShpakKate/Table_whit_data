@@ -1,5 +1,8 @@
-@media (max-width: 1024px) {
-
+@media (max-width: 768px) {
+  .button-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .wrapper {
@@ -24,11 +27,13 @@
   margin: 1.5rem 0;
 
   button {
-    background: #DA2032;
-    color: #FFFFFF;
+    background: var(--red);
+    color: var(---white);
     margin-right: 1.5rem;
+    margin-bottom: 0.5rem;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     border-radius: 0.5rem;
+    min-width: 8rem;
   }
 }
 
@@ -46,5 +51,9 @@
 }
 
 .gray {
+  opacity: 0.70;
   background: #666F78 !important;
+  box-shadow: 0 7px 10px rgba(0, 0, 0, 0.30) inset;
+  border-radius: 8px;
+  color: #282828 !important;
 }
