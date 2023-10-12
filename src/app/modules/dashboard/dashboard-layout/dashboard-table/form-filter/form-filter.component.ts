@@ -5,7 +5,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UsersService} from "../../../../../services/users.service";
 import {Subject, takeUntil} from "rxjs";
 import {DateUnixPipe} from "../../../../shared/pipe/date-unix.pipe";
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-form-filter',
@@ -51,18 +50,16 @@ export class FormFilterComponent implements OnInit, OnDestroy {
 
   loadData() {
     this.form = this.fb.group({
-      name: ['', Validators.required],
+      name: [''],
       phone: ['', [
-        Validators.required,
         Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$'),
-        Validators.pattern("^[0-9]*$"),
-        Validators.minLength(11)
+        Validators.pattern("^[0-9]*$")
       ]],
-      create_at: ['', Validators.required],
-      status: ['', Validators.required],
-      email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[az]{2, 4}$")]],
-      is_admin: ['', Validators.required],
-      update_at: ['', Validators.required],
+      create_at: [''],
+      status: [''],
+      email: ['', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[az]{2, 4}$")]],
+      is_admin: [''],
+      update_at: [''],
     });
   }
 
@@ -83,10 +80,13 @@ export class FormFilterComponent implements OnInit, OnDestroy {
     }
 
     console.log(this.form.value)
-    this.usersService.isFilteredData(this.form.value);
 
-    this.form.markAsPristine();
-    this.form.markAsUntouched();
+    if (this.form.value !== null) {
+      this.usersService.isFilteredData(this.form.value);
+
+      this.form.markAsPristine();
+      this.form.markAsUntouched();
+    }
   }
 
   cancel() {

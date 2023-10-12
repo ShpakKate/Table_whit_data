@@ -5,11 +5,11 @@
     <div class="form-control-wrapper">
      <label>Логин</label>
      <mat-form-field appearance="outline" hideRequiredMarker>
-       <input matInput (keyup)="applyFilter($event)" formControlName="name" #valueName>
-       <button mat-icon-button aria-label="Clear" (click)="valueName.value = ''">
+       <input matInput (keyup)="applyFilter($event)" formControlName="name">
+       <button mat-icon-button aria-label="Clear" (click)="form.get('name')?.reset()">
          <mat-icon>{{'close'}}</mat-icon>
        </button>
-       <mat-error *ngIf="!form.get('name')?.valid && form.get('name')?.dirty">
+       <mat-error *ngIf="form.get('name')?.dirty">
          Имя невалидно
        </mat-error>
     </mat-form-field>
@@ -18,11 +18,11 @@
     <div class="form-control-wrapper">
       <label>Телефон</label>
       <mat-form-field appearance="outline" hideRequiredMarker>
-      <input matInput formControlName="phone" #valuePhone>
-        <button mat-icon-button aria-label="Clear" (click)="valuePhone.value=''">
+      <input matInput formControlName="phone">
+        <button mat-icon-button aria-label="Clear" (click)="form.get('phone')?.reset()">
           <mat-icon>{{'close'}}</mat-icon>
         </button>
-      <mat-error *ngIf="!form.get('phone')?.valid && form.get('phone')?.dirty">
+      <mat-error *ngIf="form.get('phone')?.errors">
         +7(999) 888-88-88
       </mat-error>
       </mat-form-field>
@@ -39,20 +39,17 @@
             <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
           </mat-datepicker-actions>
         </mat-datepicker>
-        <mat-error *ngIf="!form.get('create_at')?.valid && form.get('create_at')?.dirty">
-          Дата невалидна
-        </mat-error>
       </mat-form-field>
     </div>
 
     <div class="form-control-wrapper">
       <label>E-mail</label>
       <mat-form-field appearance="outline" hideRequiredMarker>
-      <input matInput formControlName="email" #valueEmail>
-        <button mat-icon-button aria-label="Clear" (click)="valueEmail.value=''">
+      <input matInput formControlName="email">
+        <button mat-icon-button aria-label="Clear" (click)="form.get('email')?.reset()">
           <mat-icon>{{'close'}}</mat-icon>
         </button>
-      <mat-error *ngIf="!form.get('email')?.valid && form.get('email')?.dirty">
+      <mat-error *ngIf="form.get('email')?.errors">
         Недопустимые символы
       </mat-error>
       </mat-form-field>
@@ -82,9 +79,6 @@
             <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
           </mat-datepicker-actions>
         </mat-datepicker>
-      <mat-error *ngIf="!form.get('update_at')?.valid && form.get('update_at')?.dirty">
-        Дата невалидна
-      </mat-error>
       </mat-form-field>
     </div>
 
