@@ -5,7 +5,10 @@
     <div class="form-control-wrapper">
      <label>Логин</label>
      <mat-form-field appearance="outline" hideRequiredMarker>
-       <input matInput (keyup)="applyFilter($event)" formControlName="name">
+       <input matInput (keyup)="applyFilter($event)" formControlName="name" #valueName>
+       <button mat-icon-button aria-label="Clear" (click)="valueName.value = ''">
+         <mat-icon>{{'close'}}</mat-icon>
+       </button>
        <mat-error *ngIf="!form.get('name')?.valid && form.get('name')?.dirty">
          Имя невалидно
        </mat-error>
@@ -15,7 +18,10 @@
     <div class="form-control-wrapper">
       <label>Телефон</label>
       <mat-form-field appearance="outline" hideRequiredMarker>
-      <input matInput formControlName="phone">
+      <input matInput formControlName="phone" #valuePhone>
+        <button mat-icon-button aria-label="Clear" (click)="valuePhone.value=''">
+          <mat-icon>{{'close'}}</mat-icon>
+        </button>
       <mat-error *ngIf="!form.get('phone')?.valid && form.get('phone')?.dirty">
         +7(999) 888-88-88
       </mat-error>
@@ -42,7 +48,10 @@
     <div class="form-control-wrapper">
       <label>E-mail</label>
       <mat-form-field appearance="outline" hideRequiredMarker>
-      <input matInput formControlName="email">
+      <input matInput formControlName="email" #valueEmail>
+        <button mat-icon-button aria-label="Clear" (click)="valueEmail.value=''">
+          <mat-icon>{{'close'}}</mat-icon>
+        </button>
       <mat-error *ngIf="!form.get('email')?.valid && form.get('email')?.dirty">
         Недопустимые символы
       </mat-error>
@@ -91,7 +100,9 @@
 
   </form>
 
-  <button mat-raised-button (click)="apply()">Применить</button>
-  <button mat-raised-button (click)="cancel()">Отмена</button>
-  <button mat-raised-button (click)="reset()">Сбросить</button>
+ <div class="buttons-wrapper">
+   <button mat-raised-button (click)="apply()">Применить</button>
+   <button mat-raised-button (click)="cancel()">Отмена</button>
+   <button mat-raised-button (click)="reset()">Сбросить</button>
+ </div>
 </div>

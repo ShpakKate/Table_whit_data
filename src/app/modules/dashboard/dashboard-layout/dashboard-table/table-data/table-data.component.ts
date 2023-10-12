@@ -6,6 +6,8 @@ import {UsersService} from "../../../../../services/users.service";
 import {UserFull} from "../../../../shared/interfaces/user-full";
 import {Paginator} from "../../../../shared/components/paginator";
 import {SelectionModel} from "@angular/cdk/collections";
+import { DeviceDetectorService } from 'ngx-device-detector';
+
 
 @Component({
   selector: 'app-table-data',
@@ -25,12 +27,11 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
     'action', 'login','email', 'phone', 'role', 'updateData', 'createData', 'status', 'salary'
   ];
   public dataSource = new MatTableDataSource<UserFull>();
-  public numberOfRecords = 0;
   public selection?:  any;
   public initialSelection = [];
   public allowMultiSelect = true;
-
-  filterValues: any = {
+  public numberOfRecords = 0;
+  private filterValues: any = {
     name: '',
     email: '',
     phone: '',
@@ -46,8 +47,8 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
     private readonly userService: UsersService,
     private readonly elementRef: ElementRef,
     private readonly ren: Renderer2,
-  ) {
-  }
+    private readonly deviceService: DeviceDetectorService
+  ) {}
 
   ngOnInit() {
     this.loadData();
@@ -159,6 +160,7 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
+    this.numberOfRecords = numSelected;
     return numSelected == numRows;
   }
 
@@ -166,6 +168,7 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => this.selection.select(row));
+      this.numberOfRecords = 0;
   }
 
   resetFilters() {
@@ -173,25 +176,3 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
     this.dataSource.filter = "";
   }
 }
-
-
-
-// public onCheck(el: boolean) {
-//
-//   if (el) {
-//     this.numberOfRecords ++;
-//   } else this.numberOfRecords --;
-//
-//   this.countService.changeCount(this.numberOfRecords);
-//   console.log(this.numberOfRecords)
-// }
-//
-// public onCheckAll(el: boolean) {
-//   if (el) {
-//     this.numberOfRecords = this.arrayUsers.length;
-//
-//   } else this.numberOfRecords = 0;
-//
-//   this.countService.changeCount(this.numberOfRecords);
-//   console.log(this.numberOfRecords);
-// }

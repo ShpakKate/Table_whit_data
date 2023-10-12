@@ -3,8 +3,9 @@ import {MatTableDataSource} from "@angular/material/table";
 import {UserFull} from "../../../../shared/interfaces/user-full";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UsersService} from "../../../../../services/users.service";
-import {Subject} from "rxjs";
+import {Subject, takeUntil} from "rxjs";
 import {DateUnixPipe} from "../../../../shared/pipe/date-unix.pipe";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-form-filter',
@@ -21,6 +22,7 @@ export class FormFilterComponent implements OnInit, OnDestroy {
   @Input() name?: string;
   @Input() show!: boolean;
   @Output() close = new EventEmitter();
+  @Output() formStorage =new EventEmitter();
 
   constructor(
     private readonly fb: FormBuilder,
@@ -33,6 +35,13 @@ export class FormFilterComponent implements OnInit, OnDestroy {
     this.loadData();
 
     this.dataSource.data = this.arrUsers;
+
+    this.form.valueChanges
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe( form => {
+        this.formStorage.emit(form);
+      })
+
   }
 
   ngOnDestroy() {
@@ -44,7 +53,11 @@ export class FormFilterComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       name: ['', Validators.required],
       phone: ['', [
-        Validators.required, Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$')]],
+        Validators.required,
+        Validators.pattern('^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$'),
+        Validators.pattern("^[0-9]*$"),
+        Validators.minLength(11)
+      ]],
       create_at: ['', Validators.required],
       status: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+.[az]{2, 4}$")]],
@@ -62,6 +75,11 @@ export class FormFilterComponent implements OnInit, OnDestroy {
     if (this.form.get('update_at')?.value !== '') {
       const maskedVal =  this.dateUnix.transform(this.form.get('update_at')?.value);
       this.form.patchValue({update_at: maskedVal});
+    }
+
+    if (this.form.get('create_at')?.value !== '') {
+      const maskedVal =  this.dateUnix.transform(this.form.get('create_at')?.value);
+      this.form.patchValue({create_at: maskedVal});
     }
 
     console.log(this.form.value)
@@ -82,5 +100,6 @@ export class FormFilterComponent implements OnInit, OnDestroy {
     this.loadData();
     this.usersService.isFilteredData(this.form.value);
     this.form.markAsPristine();
+    this.form.markAsUntouched();
   }
 }
