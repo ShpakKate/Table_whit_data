@@ -21,10 +21,6 @@ export class DashboardTableComponent {
     this.show = !this.show;
   }
 
-  toggleChange($event: boolean) {
-    this.show = $event;
-  }
-
   setFormStorage($event: any) {
     this.form = $event;
   }
