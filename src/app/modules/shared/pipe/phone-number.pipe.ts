@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { parsePhoneNumber, CountryCode } from 'libphonenumber-js/min';
 
 @Pipe({
   name: 'phoneNumber'
