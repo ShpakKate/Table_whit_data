@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable, of, Subject} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {UserFull} from "../modules/shared/interfaces/user-full";
 
 @Injectable({
@@ -9,7 +9,6 @@ import {UserFull} from "../modules/shared/interfaces/user-full";
 export class UsersService {
 
   private filteredData$ = new Subject<UserFull>();
-  public subscriber$ = this.filteredData$.asObservable();
   url: string = 'http://cars.cprogroup.ru/api/rubetek/angular-testcase-list/';
 
   constructor(
