@@ -3,8 +3,9 @@ import {MatTableDataSource} from "@angular/material/table";
 import {UserFull} from "../../../../shared/interfaces/user-full";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UsersService} from "../../../../../services/users.service";
-import {Subject} from "rxjs";
+import {Subject, takeUntil} from "rxjs";
 import {DateUnixPipe} from "../../../../shared/pipe/date-unix.pipe";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-form-filter',
@@ -21,6 +22,7 @@ export class FormFilterComponent implements OnInit, OnDestroy {
   @Input() name?: string;
   @Input() show!: boolean;
   @Output() close = new EventEmitter();
+  @Output() formStorage =new EventEmitter();
 
   constructor(
     private readonly fb: FormBuilder,
@@ -33,6 +35,13 @@ export class FormFilterComponent implements OnInit, OnDestroy {
     this.loadData();
 
     this.dataSource.data = this.arrUsers;
+
+    this.form.valueChanges
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe( form => {
+        this.formStorage.emit(form);
+      })
+
   }
 
   ngOnDestroy() {

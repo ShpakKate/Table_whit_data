@@ -31,13 +31,7 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
   public initialSelection = [];
   public allowMultiSelect = true;
   public numberOfRecords = 0;
-  public deviceInfo: any;
-  public isMobile!: boolean;
-  public isTablet!: boolean;
-  public isDesktopDevice!: boolean;
-
-
-  filterValues: any = {
+  private filterValues: any = {
     name: '',
     email: '',
     phone: '',
@@ -57,8 +51,6 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
   ) {}
 
   ngOnInit() {
-    this.epicFunction();
-
     this.loadData();
 
     this.selection = new SelectionModel<any>(this.allowMultiSelect, this.initialSelection);
@@ -182,16 +174,5 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
   resetFilters() {
     this.filterValues = {};
     this.dataSource.filter = "";
-  }
-
-  epicFunction() {
-    this.deviceInfo = this.deviceService.getDeviceInfo();
-    this.isMobile = this.deviceService.isMobile();
-    this.isTablet = this.deviceService.isTablet();
-    this.isDesktopDevice = this.deviceService.isDesktop();
-    console.log(this.deviceInfo);
-    console.log(this.isMobile);  // returns if the device is a mobile device (android / iPhone / windows-phone etc)
-    console.log(this.isTablet);  // returns if the device us a tablet (iPad etc)
-    console.log(this.isDesktopDevice); // returns if the app is running on a Desktop browser.
   }
 }

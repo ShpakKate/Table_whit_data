@@ -1,7 +1,7 @@
 @media (min-width: 1025px) {
   table {
     th {
-      color: #FFFFFF;
+      color: var(--white);
       background: var(--red);
     }
   }
@@ -31,8 +31,7 @@
     width: 100%;
 
     th {
-      background-color: #FFFFFF;
-      color: #282828;
+      background-color: var(--white);
     }
   }
 
@@ -63,7 +62,7 @@
 }
 
 :host ::ng-deep .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background {
-  background: #FFFFFF;
+  background: var(--white);
 }
 
 table {
@@ -75,7 +74,6 @@ table {
   }
 
   td {
-    color: #282828;
     text-align: -webkit-center;
   }
 }
@@ -94,9 +92,9 @@ table {
     margin-right: 0.5rem;
     width: 1.5rem;
     height: 1.5rem;
-    background: white;
+    background: var(--white);
     border-radius: 4px;
-    border: 1px #A2A9B1 solid;
+    border: 1px var(--gray-light) solid;
   }
 
   div {
@@ -115,7 +113,7 @@ table {
 
 .paginator-wrapper {
   padding: 1.5rem 0;
-  background: #FFFFFF;
+  background: var(--white);
 }
 
 .count {
@@ -141,10 +139,14 @@ table {
   height: 24px;
   border-radius: 50%;
   background: var(--green);
+  position: relative;
 
   &::after {
     content: '\2713';
-    color: #FAFAFA;
+    color: var(--white-dirty);
+    position: absolute;
+    right: 6px;
+    top: 3px;
   }
 }
 
@@ -153,10 +155,14 @@ table {
   height: 24px;
   border-radius: 50%;
   background: var(--red-error);
+  position: relative;
 
   &::after {
     content: '\00D7';
-    color: #FAFAFA;
+    color: var(--white-dirty);
+    position: absolute;
+    right: 8px;
+    top: 2px;
   }
 }
 
@@ -188,7 +194,7 @@ table {
 }
 
 :host ::ng-deep .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline .mdc-notched-outline__trailing {
-  background: #e0e0e0;
+  background: var(--white-gray);
   opacity: 0.30;
 }
 

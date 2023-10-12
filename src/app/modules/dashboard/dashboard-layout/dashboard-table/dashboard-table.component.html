@@ -10,8 +10,8 @@
   <div class="button-wrapper">
     <div>
       <button mat-raised-button>Добавить</button>
-      <button mat-raised-button>Разблокировать</button>
-      <button mat-raised-button>Заборкировать</button>
+      <button mat-raised-button (click)="getForm()">Разблокировать</button>
+      <button mat-raised-button (click)="saveForm()">Заблокировать</button>
     </div>
     <div>
       <button mat-raised-button [ngClass]="{'red' : !show, 'gray': show}" (click)="toggle()">Фильтр</button>
@@ -23,6 +23,7 @@
       <app-form-filter
         [show]="show"
         (close)="toggleChange($event)"
+        (formStorage)="setFormStorage($event)"
       ></app-form-filter>
     </div>
   </ng-container>
