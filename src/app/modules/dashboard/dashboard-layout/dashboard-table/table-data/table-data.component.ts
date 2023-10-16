@@ -62,12 +62,6 @@ export class TableDataComponent implements OnInit, AfterViewInit, OnDestroy{
     this.dataSource.paginator = this.paginator;
 
     this.getFilteredForm();
-
-    const table = this.elementRef.nativeElement.querySelector('.mat-mdc-table');
-    const body =  this.elementRef.nativeElement.querySelector('tbody.mdc-data-table__content');
-
-    this.ren.setStyle(table,'table-layout', 'fixed');
-    this.ren.setStyle(body, 'background', '#FFFFFF');
   }
 
   ngOnDestroy() {

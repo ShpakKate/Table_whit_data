@@ -210,3 +210,11 @@ table {
 :host ::ng-deep .mat-mdc-paginator .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
   padding-top: 0;
 }
+
+:host ::ng-deep .mat-mdc-table {
+  table-layout: fixed;
+}
+
+:host ::ng-deep .tbody.mdc-data-table__content {
+  background: var(--white);
+}
